@@ -1,3 +1,6 @@
+
+import fetch = require("node-fetch");
+
 enum RequestCache {
     noCache = 'no-cache',
     default = 'default',
@@ -46,19 +49,26 @@ let post = function postRequest(url: string,
 
     // config request
     let config: any = {
-        body: JSON.stringify(data), // must match 'Content-Type' header
+        body: data, // must match 'Content-Type' header
         cache: cache, // 'no-cache',
         // *default, cache, reload, force-cache, only-if-cached
-        credentials: 'same-origin', // include, *omit
+        //credentials: 'same-origin', // include, *omit
         headers: {
-            'user-agent': 'Mozilla/4.0 MDN Example',
-            'content-type': 'application/json',
-            'X-Authorization': 'Bearer' + token,
+            'Accept': 'application/json, text/plain, */*',
+            'Accept-Encoding': 'gzip, deflate',
+            'Accept-Language': 'zh-CN,zh;q=0.9',
+            'Connection': 'keep-alive',
+            'Content-Length': data.length,
+            'Content-Type': 'application/json; charset=UTF-8',
+            'Host': 'imzhiliao.com:10000',
+            'Origin': 'http://web.imzhiliao.com',
+            'Referer': 'http://web.imzhiliao.com/',
+            'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.99 Safari/537.36'
         },
         method: 'POST', // *GET, PUT, DELETE, etc.
-        mode: mode, // no-cors, *same-origin, cors
-        redirect: 'follow', // *manual, error
-        referrer: 'no-referrer', // *client
+        //mode: mode, // no-cors, *same-origin, cors
+        //redirect: 'follow', // *manual, error
+        //referrer: 'no-referrer', // *client
     }
 
     // fetch api
@@ -71,7 +81,7 @@ let post = function postRequest(url: string,
             } else if (response.statusText == 'No Content') {
                 return
             } else {
-                return response.json()
+                return response.json();
             }
         })
 }
